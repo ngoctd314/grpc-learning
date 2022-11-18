@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+option go_package = "github.com/ngoctd314/grpc-learning/route/pb";
+
+package routeguide;
+
+// Interface exported by the server
+// To define a service, you specify a named service in your .proto file
+service RouteGuide {
+  // Then you define rpc methods inside your service definition, specifying
+  // their request and response types
+  // A simple RPC where the client sends a
+  // request to the server using the stub and waits for a response
+  rpc GetFeature(Point) returns (Feature) {}
+  // A server-side streaming RPC where the client sends a request to the server
+  // and gets a stream to read a sequence of message back.
+  // The client reads from the returned stream until there are no more messages.
+  // You specify a server-side streaming method by placing the stream keyword
+  // before the response type
+  rpc ListFeatures(Rectangle) returns (stream Feature) {}
+}
+
+message Point {
+  int32 latitude = 1;
+  int32 longitude = 2;
+}
+
+message Rectangle {
+  Point lo = 1;
+  Point hi = 2;
+}
+
+message Feature {
+  string name = 1;
+  Point location = 2;
+}
+
+message RouteNote {
+  Point location = 1;
+  string message = 2;
+}
+
+message RouteSummary {
+  int32 point_count = 1;
+  int32 feature_count = 2;
+  int32 distance = 3;
+  int32 elapsed_time = 4;
+}
