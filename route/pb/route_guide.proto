@@ -12,12 +12,23 @@ service RouteGuide {
   // A simple RPC where the client sends a
   // request to the server using the stub and waits for a response
   rpc GetFeature(Point) returns (Feature) {}
+
   // A server-side streaming RPC where the client sends a request to the server
   // and gets a stream to read a sequence of message back.
   // The client reads from the returned stream until there are no more messages.
   // You specify a server-side streaming method by placing the stream keyword
   // before the response type
   rpc ListFeatures(Rectangle) returns (stream Feature) {}
+
+  // A client-to-server streaming RPC
+  //
+  // Accept a stream of Points on a route being traversed, returning a
+  // RouteSummary when traversal is completed
+  rpc RecordRoute(stream Point) returns (RouteSummary) {}
+
+  // A Bidirectional streaming RPC
+  //
+  // rpc RouteChat(stream RouteNote) returns (RouteSummary) {}
 }
 
 message Point {
